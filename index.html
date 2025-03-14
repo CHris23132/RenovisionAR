@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RenovisionAR - Enterprise augmented reality solutions for architecture and construction visualization">
+    <meta name="theme-color" content="#39B54A">
+    <title>RenovisionAR | Enterprise AR Solutions for Construction Visualization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #39B54A;
+            --primary-light: #67D147;
+            --text-color: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --button-text: #39B54A;
+            --button-bg: #FFFFFF;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --header-height: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            height: 100%;
+        }
+
+        .logo {
+            width: 180px;
+            height: auto;
+        }
+
+        .hero {
+            padding-top: var(--header-height);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-inner {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 4rem;
+            padding: 4rem 0;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            padding-top: 2rem;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .phone-container {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .phone-image {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            filter: drop-shadow(0 20px 40px var(--shadow-color));
+            border-radius: 36px;
+            object-fit: contain;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .features {
+            padding: 5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            h1 {
+                font-size: 4rem;
+            }
+            
+            .phone-image {
+                max-width: 380px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-inner {
+                gap: 2rem;
+                padding: 3rem 0;
+            }
+            
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.125rem;
+                margin-bottom: 2rem;
+            }
+            
+            .phone-image {
+                max-width: 340px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --header-height: 70px;
+            }
+            
+            .header-container {
+                padding: 0.75rem 1.5rem;
+            }
+            
+            .logo {
+                width: 150px;
+            }
+            
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .hero-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 3rem;
+                padding: 2rem 0;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                padding-top: 1rem;
+            }
+            
+            .hero-subtitle {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .phone-container {
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --header-height: 60px;
+            }
+            
+            .header-container, .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .phone-image {
+                max-width: 280px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="images/transparent-logo.png" alt="RenovisionAR Logo" class="logo" width="180" height="60">
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <h1>Make Your<br>Client See it<br>and Need it</h1>
+                    <p class="hero-subtitle">Transform your construction and renovation projects with our enterprise-grade augmented reality visualization platform.</p>
+                    <a href="#" class="cta-button" aria-label="Schedule a call with our team">Schedule Call</a>
+                </div>
+                <div class="phone-container">
+                    <img src="images/iPhone-Reno-Image.png" alt="AR visualization of a pool enclosure on iPhone" class="phone-image" width="420" loading="eager" fetchpriority="high">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose RenovisionAR</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏗️</div>
+                    <h3 class="feature-title">Realistic Visualization</h3>
+                    <p class="feature-description">Show clients exactly how their project will look before construction begins with photorealistic AR models.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Mobile Integration</h3>
+                    <p class="feature-description">Our technology works seamlessly on iOS and Android devices, making presentations easy anywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">Increased Conversions</h3>
+                    <p class="feature-description">Clients who can visualize their projects are 40% more likely to approve and proceed with construction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
