@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Calendly widget CSS -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #39B54A;
@@ -134,6 +136,8 @@
             font-size: 1.125rem;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: none;
         }
 
         .cta-button:hover {
@@ -187,6 +191,11 @@
         .feature-description {
             color: var(--text-secondary);
             font-size: 1rem;
+        }
+
+        /* Hide the default Calendly badge since we're using our own button */
+        .calendly-badge-widget {
+            display: none !important;
         }
 
         /* Responsive design */
@@ -319,7 +328,7 @@
                 <div class="hero-content">
                     <h1>Make Your<br>Client See it<br>and Need it</h1>
                     <p class="hero-subtitle">Transform your construction and renovation projects with our enterprise-grade augmented reality visualization platform.</p>
-                    <a href="#" class="cta-button" aria-label="Schedule a call with our team">Schedule Call</a>
+                    <button class="cta-button" id="schedule-button" aria-label="Schedule a call with our team">Schedule Call</button>
                 </div>
                 <div class="phone-container">
                     <img src="images/iPhone-Reno-Image.png" alt="AR visualization of a pool enclosure on iPhone" class="phone-image" width="420" loading="eager" fetchpriority="high">
@@ -350,5 +359,27 @@
             </div>
         </div>
     </section>
+
+    <!-- Calendly scripts -->
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            // Initialize Calendly badge widget (we'll hide it with CSS)
+            Calendly.initBadgeWidget({
+                url: 'https://calendly.com/chris-christopher-walsh-apps/free-app-product-consultation',
+                text: 'Schedule time with me',
+                color: '#84f31e',
+                textColor: '#ffffff'
+            });
+            
+            // Add click event to our custom button
+            document.getElementById('schedule-button').addEventListener('click', function() {
+                Calendly.initPopupWidget({
+                    url: 'https://calendly.com/chris-christopher-walsh-apps/free-app-product-consultation'
+                });
+                return false;
+            });
+        }
+    </script>
 </body>
 </html>
