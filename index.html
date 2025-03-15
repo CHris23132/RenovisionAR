@@ -104,10 +104,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: relative; /* NOT fixed => no overlap */
+      position: relative; /* Non-fixed => no overlap */
       backdrop-filter: blur(10px) saturate(150%);
       border-bottom: 1px solid var(--glass-border);
-      z-index: 100; /* Ensures header is above background shape */
+      z-index: 100;
     }
 
     .logo {
@@ -137,12 +137,12 @@
       position: relative;
       z-index: 1;
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* Align text top with phone top */
       justify-content: center;
       max-width: 1200px;
       margin: 0 auto;
       gap: 3rem;
-      padding: 4rem 2rem;
+      padding: 3rem 2rem;
     }
 
     .hero-content {
@@ -150,14 +150,21 @@
       animation: fadeInLeft 1s ease forwards;
       opacity: 0; /* start hidden for animation */
       transform: translateX(-30px);
+      margin-top: 0.3rem;
     }
 
     .hero-content h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      /* Force a 2-line layout with a <br> at an appropriate spot */
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
       line-height: 1.2;
       margin-bottom: 1rem;
       font-weight: 700;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-content h1 br {
+      /* Slightly reduce the line height on the break */
+      line-height: 1.2;
     }
 
     .hero-content p {
@@ -203,15 +210,86 @@
         0 12px 25px rgba(0, 0, 0, 0.25);
     }
 
+    /* -------------- FEATURE SECTION (Under Hero Buttons) -------------- */
+    .hero-features {
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 800px; /* Increased for 3 in a row */
+    }
+
+    .feature-heading {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--color-white);
+      opacity: 0.9;
+    }
+
+    .feature-cards {
+      /* Exactly three columns on larger screens */
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      position: relative;
+      overflow: hidden;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: left;
+      backdrop-filter: blur(10px) saturate(150%);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-white);
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--color-white-muted);
+      line-height: 1.4;
+    }
+
     /* -------------- PHONE IMAGE -------------- */
     .hero-image {
       flex: 1;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       animation: fadeInRight 1.2s ease forwards;
       opacity: 0; /* start hidden for animation */
       transform: translateX(30px);
+      position: relative;
+    }
+
+    /* Subtle glow behind phone image */
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 60%
+      );
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: -1;
     }
 
     .phone-image {
@@ -231,7 +309,7 @@
     /* -------------- STATS SECTION -------------- */
     .stats {
       max-width: 1000px;
-      margin: 0 auto 4rem;
+      margin: 2rem auto 4rem;
       padding: 0 2rem;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -311,12 +389,14 @@
     @media (max-width: 992px) {
       .hero {
         flex-direction: column;
+        align-items: center;
       }
       .hero-content,
       .hero-image {
         transform: none;
         opacity: 1;
         animation: none;
+        margin-top: 0; /* reset for center alignment */
       }
       .hero-content {
         text-align: center;
@@ -325,8 +405,16 @@
         max-width: 100%;
         margin: 0 auto 2rem;
       }
+      .hero-features {
+        max-width: 800px;
+        margin: 2rem auto 0;
+      }
+      .feature-cards {
+        grid-template-columns: 1fr 1fr;
+      }
       .hero-image {
         margin-top: 2rem;
+        align-items: center;
       }
     }
 
@@ -350,6 +438,12 @@
       .hero-content p {
         font-size: 0.95rem;
       }
+      .hero-features {
+        max-width: 100%;
+      }
+      .feature-cards {
+        grid-template-columns: 1fr;
+      }
       .phone-image {
         max-width: 280px;
       }
@@ -363,7 +457,7 @@
   </style>
 </head>
 <body>
-  <!-- HEADER (Non-fixed) -->
+  <!-- HEADER -->
   <header>
     <img
       src="images/Vantari-Transparent-Logo.png"
@@ -382,12 +476,18 @@
   <section class="hero">
     <!-- Hero Content -->
     <div class="hero-content">
-      <h1>Make Your Client<br />See It and Need It</h1>
+      <!-- Two-line hero heading -->
+      <h1>
+        Make Your Client See It and<br />
+        Need It
+      </h1>
+
       <p>
         Elevate buyer confidence and reduce returns with our cutting-edge
         AR visualization technology designed for architects and interior
         designers.
       </p>
+
       <div class="hero-buttons">
         <button
           class="cta-button"
@@ -403,6 +503,34 @@
         >
           Watch How It Works
         </a>
+      </div>
+
+      <!-- 3 FEATURE CARDS UNDER THE BUTTONS -->
+      <div class="hero-features">
+        <h2 class="feature-heading">Why Choose Vantari?</h2>
+        <div class="feature-cards">
+          <div class="feature-card">
+            <h3>💡 Precise Lighting</h3>
+            <p>
+              AR objects with realistic lighting that adapt to any
+              environment, ensuring a true-to-life preview.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>👆 One-Tap Placement</h3>
+            <p>
+              Instantly visualize furniture and décor in your space with
+              a single tap—no measuring required.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>🤝 Interactive Collaboration</h3>
+            <p>
+              Share 3D previews with clients in real-time to expedite
+              approvals and reduce costly revisions.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
